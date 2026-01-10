@@ -444,6 +444,57 @@ php artisan view:cache
 
 4. Serve with a production web server (Nginx/Apache)
 
+## Exposing with ngrok (or other tunnels)
+
+When exposing your app via ngrok or similar tunneling services, you **must use a production build**. Here's why:
+
+### Why Development Mode Doesn't Work with ngrok
+
+In development, your app uses two servers:
+
+-   **Laravel** on port `8000` - serves HTML and API
+-   **Vite** on port `5173` - serves JavaScript/CSS with hot reloading
+
+When you tunnel only port `8000`, the browser receives HTML that references `localhost:5173` for assets. Since `localhost:5173` isn't accessible from the internet, the JavaScript never loads and you see a **white screen**.
+
+### Steps to Expose via ngrok
+
+1. Build production assets:
+
+```powershell
+npm run build
+```
+
+2. Remove the hot file (stops Vite dev server references):
+
+```powershell
+Remove-Item public\hot
+```
+
+3. Ensure Laravel is running:
+
+```powershell
+php artisan serve
+```
+
+4. Start ngrok tunnel:
+
+```powershell
+ngrok http 8000
+```
+
+5. Access your ngrok URL (e.g., `https://xxxx.ngrok-free.app`)
+
+### Switching Back to Development Mode
+
+To return to local development with hot reloading:
+
+```powershell
+npm run dev
+```
+
+This recreates the `hot` file and enables Vite's hot module replacement again.
+
 ## Troubleshooting
 
 ### Vite fails to start

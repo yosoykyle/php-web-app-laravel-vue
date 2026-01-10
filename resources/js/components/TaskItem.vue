@@ -37,7 +37,7 @@
             {{ task.text }}
           </p>
           <p class="text-xs text-gray-500 mt-1">
-            {{ formatDate(task.createdAt) }}
+            {{ formatDate(task.created_at || task.createdAt) }}
           </p>
         </div>
       </div>
@@ -68,7 +68,11 @@ defineProps({
 defineEmits(['toggle', 'delete']);
 
 const formatDate = (date) => {
+  if (!date) return 'No date';
+  
   const d = new Date(date);
+  if (isNaN(d.getTime())) return 'No date';
+  
   const now = new Date();
   const diff = now - d;
   const minutes = Math.floor(diff / 60000);
