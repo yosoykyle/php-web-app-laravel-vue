@@ -1,3 +1,13 @@
+<!--
+  =================================================================================================
+  StatCard.vue (The "Dashboard Widget")
+  =================================================================================================
+  
+  ANALOGY:
+  Think of this as a reusable sticker code.
+  Instead of writing the code for a blue card, then a green card, then a yellow card...
+  We write ONE "Card" component and just tell it: "Be blue", "Be green", etc.
+-->
 <template>
   <div :class="[
     'bg-white rounded-lg shadow-md p-6 border-l-4 transition hover:shadow-lg',
@@ -26,12 +36,22 @@
 <script setup>
 import { computed } from 'vue';
 
+// PROPS (The "Instructions")
+// These are the values passed DOWN from the parent (App.vue).
+// It's like filling out a form when you order the sticker:
+// - Title: "Total Tasks"
+// - Value: 10
+// - Color: "blue"
 const props = defineProps({
   title: String,
   value: Number,
   icon: String,
   color: String
 });
+
+// COMPUTED STYLES (The "Paint Mixer")
+// Based on the 'color' prop (e.g., 'blue'), we decide exactly which CSS classes to use.
+// logical step: If color is 'blue', return 'bg-blue-500'.
 
 const borderColor = computed(() => {
   const colors = {
@@ -40,6 +60,7 @@ const borderColor = computed(() => {
     yellow: 'border-yellow-500',
     red: 'border-red-500'
   };
+  // Fallback: If the color isn't found, use gray.
   return colors[props.color] || 'border-gray-500';
 });
 

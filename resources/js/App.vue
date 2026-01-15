@@ -1,3 +1,15 @@
+<!--
+  =================================================================================================
+  App.vue (The "Main Stage")
+  =================================================================================================
+  
+  ANALOGY:
+  This is the main component of your application.
+  In Vue, a component has 3 parts, like a sandwich:
+  1. <template> (The Bread/Visuals): HTML code (what you see).
+  2. <script> (The Meat/Logic): JavaScript code (how it works).
+  3. <style> (The Sauce/CSS): Styling (how it looks).
+-->
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <!-- Header -->
@@ -109,14 +121,25 @@
 </template>
 
 <script setup>
+/**
+ *  <script setup>
+ *  This is the "Brain" of the component.
+ *  We use the "Composition API" here, which is the modern way to write Vue.
+ */
 import { ref, computed, onMounted } from 'vue';
 import StatCard from './components/StatCard.vue';
 import TaskItem from './components/TaskItem.vue';
 
+// STATE (The "Memory")
+// 'ref' makes a variable "reactive". If it changes, the HTML updates automatically.
 const tasks = ref([]);
 const newTask = ref('');
 const currentFilter = ref('All');
 const filters = ['All', 'Active', 'Completed'];
+
+// COMPUTED PROPERTIES (The "Calculator")
+// These values are automatically calculated based on other data.
+// If 'tasks' changes, these update instantly.
 
 const currentDate = computed(() => {
   return new Date().toLocaleDateString('en-US', {
@@ -128,7 +151,7 @@ const currentDate = computed(() => {
 });
 
 const completedTasks = computed(() => {
-  return tasks.value.filter(task => task.completed).length;
+  return tasks.value.filter(task => task.completed).length; 
 });
 
 const pendingTasks = computed(() => {
@@ -216,6 +239,8 @@ const saveTasks = () => {
   localStorage.setItem('tasks', JSON.stringify(tasks.value));
 };
 
+// LIFECYCLE HOOKS (The "Events")
+// onMounted: "When this component first appears on screen, do this."
 onMounted(() => {
   loadTasks();
 });

@@ -1,7 +1,23 @@
+<!--
+  =================================================================================================
+  TaskItem.vue (The "Single Task" Row)
+  =================================================================================================
+  
+  ANALOGY:
+  This represents one single line in your to-do list.
+  It manages its own checkbox and delete button, but it reports back to the boss (App.vue)
+  when something happens.
+-->
 <template>
   <div class="border-b border-gray-200 hover:bg-gray-50 transition">
     <div class="p-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-4 flex-1">
+        <!-- 
+           CLICK EVENT:
+           When clicked, we don't change the data here.
+           Instead, we yell: "$emit('toggle')" to the parent.
+           "Hey Parent! The user clicked this task!"
+        -->
         <button
           @click="$emit('toggle', task.id)"
           :class="[
@@ -61,10 +77,15 @@
 </template>
 
 <script setup>
+
+// PROPS: The task data object passed from the parent list.
 defineProps({
   task: Object
 });
 
+// EMITS: The list of "Signals" this component can send to the parent.
+// - 'toggle': "User clicked the checkmark"
+// - 'delete': "User clicked the trash can"
 defineEmits(['toggle', 'delete']);
 
 const formatDate = (date) => {
