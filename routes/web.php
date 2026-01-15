@@ -4,12 +4,15 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Web Routes (The "Front Desk" or "Reception")
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| ANALOGY:
+| Think of this as the main entrance to a hotel.
+| When a user types a URL in their browser (like "mysite.com/"), they are walking
+| into the lobby.
+|
+| We typically return "Views" (HTML pages) from here.
 |
 */
 

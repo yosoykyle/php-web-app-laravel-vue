@@ -4,12 +4,24 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+// =================================================================================================
+// Kernel.php (The "Traffic Police" or "Security Checkpoints")
+// =================================================================================================
+//
+// ANALOGY:
+// This file controls the flow of requests entering your application.
+// Just like airport security checks every passenger before they board a plane,
+// the Kernel runs "Middleware" checks on every request before it hits your Controller.
 class Kernel extends HttpKernel
 {
     /**
      * The application's global HTTP middleware stack.
      *
-     * These middleware are run during every request to your application.
+     * ANALOGY: "The Main Entrance Security"
+     * Everyone (Web users, API bots) must go through these checks first.
+     * - TrustProxies: Handling requests behind a load balancer.
+     * - HandleCors: Allowing other websites to talk to us.
+     * - TrimStrings: Cleaning up input (removing extra spaces).
      *
      * @var array<int, class-string|string>
      */
@@ -25,6 +37,16 @@ class Kernel extends HttpKernel
 
     /**
      * The application's route middleware groups.
+     *
+     * ANALOGY: "Specialized Security Lines"
+     *
+     * 'web': The line for human users in browsers.
+     * - EncryptCookies: Securing data stored in the browser.
+     * - StartSession: Remembering who the user is (Login state).
+     * - VerifyCsrfToken: preventing malicious form submissions.
+     *
+     * 'api': The line for mobile apps and robots.
+     * - throttle:api: Limiting how many requests they can make per minute (Speed limit).
      *
      * @var array<string, array<int, class-string|string>>
      */
